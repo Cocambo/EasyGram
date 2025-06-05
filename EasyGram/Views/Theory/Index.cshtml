@@ -1,0 +1,98 @@
+﻿@{
+    ViewData["Title"] = "Теория ЕГЭ по русскому языку";
+    var topics = ViewBag.Topics as List<EasyGram.Models.Topic>;
+    var selectedTopic = ViewBag.SelectedTopic as EasyGram.Models.Topic;
+    var contentHtml = ViewBag.ContentHtml as Microsoft.AspNetCore.Html.HtmlString;
+}
+
+<div class="theory-container">
+    <div class="row">
+        <div class="col-md-3 sidebar">
+            <div class="sidebar-sticky">
+                <h5 class="sidebar-heading">Темы теории</h5>
+                <nav class="nav nav-pills flex-column">
+                    @if (topics != null && topics.Any())
+                    {
+                        @foreach (var topic in topics)
+                        {
+                            <a class="nav-link topic-link @(selectedTopic?.Id == topic.Id ? "active" : "")" 
+                               href="#" data-topic-id="@topic.Id">
+                                @topic.Title
+                            </a>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-muted">Темы не найдены</p>
+                    }
+                </nav>
+            </div>
+        </div>
+        
+        <div class="col-md-9 main-content">
+            <div id="theory-content">
+                @if (selectedTopic != null)
+                {
+                    <h2 id="topic-title">@selectedTopic.Title</h2>
+                    <div id="topic-content" class="theory-text">
+                        @contentHtml
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center text-muted">
+                        <h3>Выберите тему из меню</h3>
+                        <p>Для изучения теории выберите одну из тем в боковом меню.</p>
+                    </div>
+                }
+            </div>
+            
+            <div id="loading-indicator" class="text-center" style="display: none;">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Загрузка...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('.topic-link').on('click', function(e) {
+                e.preventDefault();
+                
+                var topicId = $(this).data('topic-id');
+                var $loadingIndicator = $('#loading-indicator');
+                var $theoryContent = $('#theory-content');
+                
+                // Убираем активный класс со всех ссылок
+                $('.topic-link').removeClass('active');
+                // Добавляем активный класс к выбранной ссылке
+                $(this).addClass('active');
+                
+                // Показываем индикатор загрузки
+                $theoryContent.hide();
+                $loadingIndicator.show();
+                
+                // Загружаем содержимое темы
+                $.get('@Url.Action("GetTopic", "Theory")', { id: topicId }) // отправляем гет запрос методу GetTopic в контроллер Theory
+                    .done(function(data) {
+                        $('#topic-title').text(data.title);
+                        $('#topic-content').html(data.content);
+                        
+                        // Обновляем URL без перезагрузки страницы
+                        var newUrl = '@Url.Action("Index", "Theory")' + '?id=' + topicId;
+                        window.history.pushState({path: newUrl}, '', newUrl);
+                    })
+                    .fail(function() {
+                        $('#topic-content').html('<div class="alert alert-danger">Ошибка загрузки содержимого темы.</div>');
+                    })
+                    .always(function() {
+                        $loadingIndicator.hide();
+                        $theoryContent.show();
+                    });
+            });
+        });
+    </script>
+}

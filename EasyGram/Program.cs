@@ -2,6 +2,7 @@ using EasyGram.Data;
 using EasyGram.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using EasyGram.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,8 @@ builder.Services.AddIdentity<Users, IdentityRole>(options =>
 })
     .AddEntityFrameworkStores<AppDbContext>()                           // для хранения данных пользователей будет использоваться Entity Framework Core с контекстом базы данных AppDbContext
     .AddDefaultTokenProviders();                                        // добавляет стандартные провайдеры токенов
+
+builder.Services.AddScoped<IMarkdownService, MarkdownService>(); // добавляем markdown сервис
 
 var app = builder.Build();
 
