@@ -16,5 +16,7 @@ namespace EasyGram.Models
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
         public int Order { get; set; } // Для сортировки тем в меню
+
+        public virtual ICollection<Question> Questions { get; set; }
     }
 }

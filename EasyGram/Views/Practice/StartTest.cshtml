@@ -1,0 +1,148 @@
+﻿@model EasyGram.ViewModels.TestViewModel
+@{
+    ViewData["Title"] = $"Тест: {Model.Topic.Title}";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="@Url.Action("Index")">Практика</a>
+                    </li>
+                    <li class="breadcrumb-item active">@Model.Topic.Title</li>
+                </ol>
+            </nav>
+
+            <h2>@Model.Topic.Title</h2>
+            <p class="text-muted">Всего вопросов: @Model.Questions.Count</p>
+
+            <div id="questionsContainer">
+                @for (int i = 0; i < Model.Questions.Count; i++)
+                {
+                    var question = Model.Questions[i];
+                    <div class="card mb-4 question-card" data-question-id="@question.Id">
+                        <div class="card-header">
+                            <h5>Вопрос @(i + 1)</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="question-text">@question.Text</p>
+
+                            <div class="answers-container">
+                                @foreach (var answer in question.Answers)
+                                {
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input answer-option"
+                                               type="radio"
+                                               name="question_@question.Id"
+                                               id="answer_@answer.Id"
+                                               value="@answer.Id">
+                                        <label class="form-check-label" for="answer_@answer.Id">
+                                            @answer.Text
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+
+                            <button type="button"
+                                    class="btn btn-primary check-answer-btn"
+                                    data-question-id="@question.Id"
+                                    disabled>
+                                Ответить
+                            </button>
+
+                            <div class="answer-result mt-3" style="display: none;">
+                                <div class="alert" role="alert">
+                                    <h6 class="result-header"></h6>
+                                    <p class="result-explanation"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="@Url.Action("Index")" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Вернуться к списку тем
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.answer-option').change(function () {   // Включение кнопки "Ответить" при выборе ответа
+                var questionId = $(this).closest('.question-card').data('question-id');
+                var checkBtn = $(`.check-answer-btn[data-question-id="${questionId}"]`);
+                checkBtn.prop('disabled', false);
+            });
+
+            $('.check-answer-btn').click(function () { // Обработка нажатия на кнопку "Ответить"
+                var questionId = $(this).data('question-id');
+                var selectedAnswer = $(`input[name="question_${questionId}"]:checked`);
+
+                if (selectedAnswer.length === 0) {
+                    alert('Пожалуйста, выберите ответ');
+                    return;
+                }
+
+                var answerId = selectedAnswer.val();
+                checkAnswer(questionId, answerId, $(this));
+            });
+
+            function checkAnswer(questionId, answerId, button) {
+                button.prop('disabled', true).text('Проверяем...');
+
+                $.ajax({
+                    url: '@Url.Action("CheckAnswer")',
+                    type: 'POST',
+                    data: {
+                        questionId: questionId,
+                        answerId: answerId
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            showResult(questionId, response);
+                            $(`input[name="question_${questionId}"]`).prop('disabled', true);  // Отключаем все radio кнопки для этого вопроса
+                        } else {
+                            alert('Ошибка: ' + response.message);
+                            button.prop('disabled', false).text('Ответить');
+                        }
+                    },
+                    error: function () {
+                        alert('Произошла ошибка при проверке ответа');
+                        button.prop('disabled', false).text('Ответить');
+                    }
+                });
+            }
+
+            function showResult(questionId, response) {
+                var questionCard = $(`.question-card[data-question-id="${questionId}"]`);
+                var resultDiv = questionCard.find('.answer-result');
+                var resultAlert = resultDiv.find('.alert');
+                var resultHeader = resultDiv.find('.result-header');
+                var resultExplanation = resultDiv.find('.result-explanation');
+
+                if (response.isCorrect) {
+                    resultAlert.removeClass('alert-danger').addClass('alert-success');
+                    resultHeader.html('<i class="fas fa-check-circle"></i> Правильно!');
+                } else {
+                    resultAlert.removeClass('alert-success').addClass('alert-danger');
+                    resultHeader.html('<i class="fas fa-times-circle"></i> Неправильно');
+                    resultExplanation.prepend(`<p><strong>Правильный ответ:</strong> ${response.correctAnswerText}</p>`);
+                }
+
+                resultExplanation.append(`<p><strong>Объяснение:</strong> ${response.explanation}</p>`);
+                resultDiv.show();
+
+                $('html, body').animate({
+                    scrollTop: resultDiv.offset().top - 100       // Прокрутка к результату
+                }, 500);
+            }
+        });
+    </script>
+}

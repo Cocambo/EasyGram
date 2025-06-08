@@ -1,6 +1,101 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model EasyGram.ViewModels.PracticeIndexViewModel
 @{
+    ViewData["Title"] = "Практика";
 }
-<h2> В разработке...</h2>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-info">
+                <h4 class="alert-heading">Готов проверить свои знания?</h4>
+                <p>Выбери тему и начни решать задания. После каждого ответа ты получишь подробное объяснение!</p>
+            </div>
+
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Прогресс по курсу:</h5>
+                    <div class="progress mb-3" style="height: 25px;">
+                        <div id="progressBar" class="progress-bar bg-success"
+                             role="progressbar"
+                             style="width: @Model.ProgressPercentage%"
+                             aria-valuenow="@Model.ProgressPercentage"
+                             aria-valuemin="0"
+                             aria-valuemax="100">
+                            <span id="progressText">@Model.ProgressPercentage%</span>
+                        </div>
+                    </div>
+                    <p class="text-muted">
+                        Выполнено: <span id="completedCount">@Model.CompletedQuestions</span> из
+                        <span id="totalCount">@Model.TotalQuestions</span> заданий
+                    </p>
+                </div>
+            </div>
+            
+
+            <div class="row">
+                @foreach (var topic in Model.Topics)
+                {
+                    <div class="col-md-6 col-lg-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">@topic.Title</h5>
+                                <p class="card-text">
+                                    @{
+                                        var endChars = new[] { '.', '!', '?' };
+                                        var index = topic.Content.IndexOfAny(endChars);
+                                        if (index >= 0)
+                                        {
+                                            @topic.Content.Substring(0, index + 1)
+                                        }
+                                        else
+                                        {
+                                            @topic.Content
+                                        }
+                                    }
+                                </p>
+
+                                <p class="text-muted small">
+                                    <i class="fas fa-question-circle"></i>
+                                    @topic.Questions.Count заданий
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="@Url.Action("StartTest", new { topicId = topic.Id })"
+                                   class="btn btn-primary btn-block">
+                                    <i class="fas fa-play"></i> Начать тест
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        
+        setInterval(function () {
+            updateProgress();           // Обновление прогресс бара каждые 30 секунд
+        }, 30000); 
+
+        function updateProgress() {
+            $.ajax({
+                url: '@Url.Action("GetProgress")',
+                type: 'GET',
+                success: function (data) {
+                    $('#progressBar').css('width', data.progressPercentage + '%')
+                        .attr('aria-valuenow', data.progressPercentage);
+                    $('#progressText').text(data.progressPercentage + '%');
+                    $('#completedCount').text(data.completedQuestions);
+                    $('#totalCount').text(data.totalQuestions);
+                },
+                error: function () {
+                    console.log('Ошибка при обновлении прогресса');
+                }
+            });
+        }
+    </script>
+}
