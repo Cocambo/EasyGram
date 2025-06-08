@@ -30,14 +30,14 @@ namespace EasyGram.Controllers
 
             var totalQuestions = await _context.Questions.CountAsync();
             var completedQuestions = await _context.UserProgresses
-                .Where(up => up.UserId == currentUser.Id && up.IsCompleted)
+                .Where(up => up.UserId == currentUser.Id && up.IsCorrect)
                 .CountAsync();
 
             var progressPercentage = totalQuestions > 0 ? (completedQuestions * 100) / totalQuestions : 0;
 
             var viewModel = new PracticeIndexViewModel
             {
-                Topics = topics,
+                Topics = topics,    
                 ProgressPercentage = progressPercentage,
                 CompletedQuestions = completedQuestions,
                 TotalQuestions = totalQuestions
@@ -84,13 +84,9 @@ namespace EasyGram.Controllers
 
             var selectedAnswer = question.Answers.FirstOrDefault(a => a.Id == answerId);
             var correctAnswer = question.Answers.FirstOrDefault(a => a.IsCorrect);
+            var isCorrect = selectedAnswer?.IsCorrect ?? false;
+            
 
-            if (selectedAnswer == null || correctAnswer == null)
-            {
-                return Json(new { success = false, message = "Ответ не найден" });
-            }
-
-            // Сохранение прогресса пользователя
             var currentUser = await _userManager.GetUserAsync(User);
             var existingProgress = await _context.UserProgresses
                 .FirstOrDefaultAsync(up => up.UserId == currentUser.Id && up.QuestionId == questionId);
@@ -102,30 +98,44 @@ namespace EasyGram.Controllers
                     UserId = currentUser.Id,
                     QuestionId = questionId,
                     IsCompleted = true,
+                    IsCorrect = isCorrect, // Указываем правильность
                     CompletedDate = DateTime.UtcNow
                 };
-
                 _context.UserProgresses.Add(userProgress);
-                await _context.SaveChangesAsync();
             }
+            else
+            {
+                if (!existingProgress.IsCorrect && isCorrect) // Обновляем при повторном ответе
+                {
+                    existingProgress.IsCorrect = true;
+                }
+                else if (existingProgress.IsCorrect && !isCorrect)
+                {
+                    existingProgress.IsCorrect = true;
+                }
+            }
+
+            await _context.SaveChangesAsync();
 
             return Json(new
             {
                 success = true,
-                isCorrect = selectedAnswer.IsCorrect,
+                isCorrect = isCorrect,
                 explanation = question.Explanation,
                 correctAnswerText = correctAnswer.Text,
                 selectedAnswerText = selectedAnswer.Text
             });
         }
 
+
         [HttpGet]
         public async Task<IActionResult> GetProgress()
         {
             var currentUser = await _userManager.GetUserAsync(User);
             var totalQuestions = await _context.Questions.CountAsync();
-            var completedQuestions = await _context.UserProgresses
-                .Where(up => up.UserId == currentUser.Id && up.IsCompleted)
+
+            var completedQuestions = await _context.UserProgresses // кол-во правильно выполненных
+                .Where(up => up.UserId == currentUser.Id && up.IsCorrect)
                 .CountAsync();
 
             var progressPercentage = totalQuestions > 0 ? (completedQuestions * 100) / totalQuestions : 0;

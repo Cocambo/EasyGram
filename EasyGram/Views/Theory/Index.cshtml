@@ -65,24 +65,21 @@
                 var topicId = $(this).data('topic-id');
                 var $loadingIndicator = $('#loading-indicator');
                 var $theoryContent = $('#theory-content');
-                
-                // Убираем активный класс со всех ссылок
-                $('.topic-link').removeClass('active');
-                // Добавляем активный класс к выбранной ссылке
-                $(this).addClass('active');
-                
-                // Показываем индикатор загрузки
-                $theoryContent.hide();
+
+
+                $('.topic-link').removeClass('active'); // Убираем активный класс со всех ссылок
+                $(this).addClass('active'); // Добавляем активный класс к выбранной ссылке
+
+                $theoryContent.hide(); // Показываем индикатор загрузки
                 $loadingIndicator.show();
-                
+
                 // Загружаем содержимое темы
                 $.get('@Url.Action("GetTopic", "Theory")', { id: topicId }) // отправляем гет запрос методу GetTopic в контроллер Theory
                     .done(function(data) {
                         $('#topic-title').text(data.title);
                         $('#topic-content').html(data.content);
-                        
-                        // Обновляем URL без перезагрузки страницы
-                        var newUrl = '@Url.Action("Index", "Theory")' + '?id=' + topicId;
+
+                        var newUrl = '@Url.Action("Index", "Theory")' + '?id=' + topicId; // Обновляем URL без перезагрузки страницы
                         window.history.pushState({path: newUrl}, '', newUrl);
                     })
                     .fail(function() {

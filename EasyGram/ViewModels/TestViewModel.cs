@@ -2,7 +2,7 @@
 
 namespace EasyGram.ViewModels
 {
-    public class TestViewModel
+    public class TestViewModel // модель представления для самой страницы теста
     {
         public Topic Topic { get; set; }
         public List<Question> Questions { get; set; }

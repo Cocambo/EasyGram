@@ -75,13 +75,13 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            $('.answer-option').change(function () {   // Включение кнопки "Ответить" при выборе ответа
+            $('.answer-option').change(function () {   // включение кнопки "Ответить" при выборе ответа(делает активной)
                 var questionId = $(this).closest('.question-card').data('question-id');
                 var checkBtn = $(`.check-answer-btn[data-question-id="${questionId}"]`);
                 checkBtn.prop('disabled', false);
             });
 
-            $('.check-answer-btn').click(function () { // Обработка нажатия на кнопку "Ответить"
+            $('.check-answer-btn').click(function () { // обработка нажатия на кнопку "Ответить"
                 var questionId = $(this).data('question-id');
                 var selectedAnswer = $(`input[name="question_${questionId}"]:checked`);
 

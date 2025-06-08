@@ -46,7 +46,7 @@ namespace EasyGram.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetTopic(int id)  // Через AJAX динамические прогружаем теорию
+        public async Task<IActionResult> GetTopic(int id)  // Через AJAX динамически прогружаем теорию
         {
             var topic = await _context.Topics.FindAsync(id);
             if (topic == null)

@@ -47,6 +47,7 @@
                                         if (index >= 0)
                                         {
                                             @topic.Content.Substring(0, index + 1)
+                                            // берем только 1-ое предложение
                                         }
                                         else
                                         {
@@ -78,8 +79,8 @@
     <script>
         
         setInterval(function () {
-            updateProgress();           // Обновление прогресс бара каждые 30 секунд
-        }, 30000); 
+            updateProgress();           // Обновление прогресс бара каждые 10 секунд
+        }, 10000); 
 
         function updateProgress() {
             $.ajax({

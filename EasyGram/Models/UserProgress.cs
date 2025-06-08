@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿    using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EasyGram.Models
@@ -18,7 +18,7 @@ namespace EasyGram.Models
         public virtual Question Question { get; set; }
 
         public bool IsCompleted { get; set; }
-
+        public bool IsCorrect { get; set; }
         public DateTime CompletedDate { get; set; }
     }
 }
