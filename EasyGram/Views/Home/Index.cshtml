@@ -2,7 +2,76 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+<div class="row align-items-begin justify-content-between begin">
+    <div class="col-6 d-flex flex-column justify-content-between" style="height: 400px;">
+        <div style="color:#545be8;">
+            Начинай <b>сейчас</b>
+        </div>
+        <h1>
+            Подготовиться с нами<br>к ЕГЭ по русскому языку<br><b style="color:#545be8;">легко</b>
+        </h1>
+        <p>
+            Начни свое обучение на нашем курсе прямо сейчас и подними баллы до 90+ с любого уровня
+        </p>
+        <div>
+            <a class="nav-link text-dark btn-reg_out" asp-controller="Account" asp-action="Register">Зарегистрироваться</a>
+        </div>
+    </div>
+    <div class="begin-img">
+
+    </div>
 </div>
+
+<div class="row align-items-center justify-content-between give">
+    <div class="col-4 d-flex flex-column justify-content-between" style="height: 250px;">
+        <h3>
+            Почему именно<br>EasyGram?<br>
+        </h3>
+        <hr style="border: none; height: 4px; background-color: rgb(240, 201, 50);">
+        <p>
+            Мы предоставляем качественное и бесплатное обучение, которое соответствует всем стандартам. Нам доверяют уже более 1000 учеников.
+        </p>
+    </div>
+    <div class="col-8 d-inline-flex justify-content-between">
+        <div class="reason d-flex flex-column justify-content-between p-4">
+            <div class="reas-circle">
+                <svg width="35" height="35" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.0878 6.76477C8.15233 6.76477 9.0153 5.9018 9.0153 4.83726C9.0153 3.77273 8.15233 2.90976 7.0878 2.90976C6.02327 2.90976 5.16029 3.77273 5.16029 4.83726C5.16029 5.9018 6.02327 6.76477 7.0878 6.76477Z" stroke="#F0C932" stroke-width="0.658976" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M10.6299 11.5863C10.9923 11.5863 11.2724 11.2349 11.1571 10.8834C10.6025 9.16457 8.99345 7.91801 7.08792 7.91801C5.18238 7.91801 3.57338 9.16457 3.01874 10.8834C2.90891 11.2294 3.18349 11.5863 3.54592 11.5863H10.6299Z" stroke="#F0C932" stroke-width="0.658976" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </div>
+            <h5>Подойдет каждому</h5>
+            <p>Понятная и доступная теория, практические задания, соответствующие критериям ФИПИ.</p>
+        </div>
+        <div class="reason d-flex flex-column justify-content-between p-4">
+            <div class="reas-circle">
+                <svg width="35" height="35" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.2404 5.74334L7.68252 7.46217C7.48483 7.53905 7.27066 7.53905 7.07297 7.46217L2.51506 5.74334C2.27343 5.65548 2.27343 5.32599 2.50956 5.23263L7.06748 3.5138C7.26517 3.43692 7.47934 3.43692 7.67703 3.5138L12.2349 5.23263C12.4711 5.3205 12.4711 5.65548 12.2404 5.74334Z" stroke="#F0C932" stroke-width="0.658976" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M2.33395 5.49069V8.30781" stroke="#F0C932" stroke-width="0.658976" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M3.89344 6.36942V9.82355C3.89344 10.3233 5.45302 10.7351 7.37503 10.7351C9.29704 10.7351 10.8566 10.3288 10.8566 9.82355V6.36942" stroke="#F0C932" stroke-width="0.658976" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </div>
+            <h5>Видимый прогресс</h5>
+            <p>Доступ к проверке знаний в любое время с возможностью отслеживать свой прогресс.</p>
+        </div>
+        <div class="reason d-flex flex-column justify-content-between p-4">
+            <div class="reas-circle">
+                <svg width="35" height="35" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6.89302 4.5132L7.21702 5.27102C7.23898 5.33692 7.29939 5.37536 7.35979 5.38085L8.18351 5.45773C8.35924 5.4742 8.42514 5.68837 8.29883 5.80369L7.6783 6.34734C7.62888 6.39128 7.60691 6.45717 7.62338 6.51758L7.8046 7.32483C7.84304 7.49506 7.66182 7.62686 7.50806 7.53899L6.79966 7.11615C6.74475 7.0832 6.67336 7.0832 6.61845 7.11615L5.91005 7.53899C5.76178 7.62686 5.57507 7.49506 5.61351 7.32483L5.79473 6.51758C5.8112 6.45717 5.78924 6.39128 5.73981 6.34734L5.11928 5.80369C4.98748 5.68837 5.05887 5.4742 5.2346 5.45773L6.05832 5.38085C6.12421 5.37536 6.17913 5.33692 6.20659 5.27651L6.53058 4.51869C6.59648 4.35394 6.82163 4.35394 6.89302 4.5132Z" stroke="#F0C932" stroke-width="0.549146" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M10.4445 6.11926C10.4587 4.05693 8.79836 2.37356 6.73602 2.35937C4.67368 2.34518 2.99032 4.00553 2.97613 6.06787C2.96193 8.13021 4.62228 9.81357 6.68462 9.82776C8.74696 9.84196 10.4303 8.1816 10.4445 6.11926Z" stroke="#F0C932" stroke-width="0.549146" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M6.20107 9.79049L5.27301 12.1244L4.09784 10.779L2.32409 10.9437L3.49927 8.00027" stroke="#F0C932" stroke-width="0.549146" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M7.21153 9.79051L8.14508 12.1244L9.31476 10.779L11.094 10.9437L9.91333 8.00029" stroke="#F0C932" stroke-width="0.549146" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </div>           
+            <h5>Сертификат курса</h5>
+            <p>После успешного прохождения экзамена, вы получаете сертификат о прохождении курса.</p>
+        </div>
+    </div>
+    
+    
+</div>
+
+
+
+

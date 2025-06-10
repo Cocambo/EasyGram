@@ -27,11 +27,11 @@
             </div>
             <div class="form-check mb-3">
                 <label class="form-check-label">
-                    <input asp-for="RememberMe" class="form-check-input" />
+                    <input asp-for="RememberMe" class="form-check-input" style="color:#545be8;" />
                     @Html.DisplayNameFor(a => a.RememberMe)
                 </label>
             </div>
-            <input type="submit" value="Вход" class="btn btn-success w-100 p-2" />
+            <input type="submit" value="Вход" class="w-100 p-2 btn-reg_out "/>
             <p class="text-center mt-2">
                     У вас нет аккаунта? <a asp-controller="Account" asp-action ="Register" class="text-decoration-none">Зарегестрироваться</a>
             </p>

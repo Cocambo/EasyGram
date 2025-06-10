@@ -8,12 +8,15 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/EasyGram.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/theory.css" />
+    <link rel="stylesheet" href="~/css/home.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap&subset=cyrillic" rel="stylesheet">
+
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">EasyGram</a>
+                <a class="navbar-name" asp-area="" asp-controller="Home" asp-action="Index">EasyGram</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -21,10 +24,10 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Theory" asp-action="Index">Теория</a>
+                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Theory" ? "active" : "")" asp-area="" asp-controller="Theory" asp-action="Index">Теория</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Practice" asp-action="Index">Практика</a>
+                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Practice" ? "active" : "")" asp-area="" asp-controller="Practice" asp-action="Index">Практика</a>
                         </li>
                         <partial name ="_LoginPartial" />
                     </ul>
@@ -38,9 +41,11 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - EasyGram - <a asp-area="" asp-controller="Practice" asp-action="Index">Privacy</a>
+    <footer class="footer text-muted">
+        <div class="container d-inline">
+            EasyGram
+            <a class="" asp-area="" asp-controller="Theory" asp-action="Index">Теория</a>
+            <a class="" asp-area="" asp-controller="Practice" asp-action="Index">Практика</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
