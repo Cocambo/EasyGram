@@ -20,3 +20,25 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/*здесь мен€ю кнопочки и вс€кие элементы с сайта, все в одной делаю*/
+/* пока пусть будет внизу, потом можно будет по отдельным css файлам раскидать*/
+
+.bg-info {
+    background-color: #545be8 !important; 
+}
+
+.btn-primary.disabled, .btn-primary:disabled {
+    color: #fff;
+    background-color: #545be8;
+    border-color: #545be8;
+}
+
+.bg-primary {
+    --bs-bg-opacity: 1;
+    background-color: #545be8 !important;
+}
+
+.bg-warning {
+    background-color: #545be8 !important; /*–езультаты экзамена шапка*/
+}

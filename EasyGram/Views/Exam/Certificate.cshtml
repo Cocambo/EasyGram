@@ -1,0 +1,77 @@
+﻿@model EasyGram.ViewModels.Exam.CertificateViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            text-align: center;
+            padding: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+
+        .certificate {
+            background: white;
+            padding: 60px;
+            border: 10px solid #ffd700;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            font-size: 48px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            font-size: 36px;
+            color: #34495e;
+            margin-bottom: 30px;
+        }
+
+        .recipient {
+            font-size: 28px;
+            color: #e74c3c;
+            margin: 30px 0;
+        }
+
+        .details {
+            font-size: 20px;
+            margin: 20px 0;
+            line-height: 1.8;
+        }
+
+        .grade {
+            font-size: 32px;
+            font-weight: bold;
+            color: #27ae60;
+            margin: 20px 0;
+        }
+
+        .date {
+            font-size: 18px;
+            color: #7f8c8d;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class='certificate'>
+        <div class='header'>СЕРТИФИКАТ</div>
+        <div class='title'>об успешном прохождении экзамена</div>
+        <div class='recipient'>выдан: @Model.UserName</div>
+        <div class='details'>
+            Количество вопросов: @Model.TotalQuestions<br>
+            Правильных ответов: @Model.CorrectAnswers<br>
+            Процент выполнения: @Model.Percentage%
+        </div>
+        <div class='grade'>Оценка: @Model.Grade</div>
+        <div class='date'>Дата выдачи: @Model.CompletedDate.ToString("dd.MM.yyyy")</div>
+    </div>
+</body>
+</html>

@@ -3,12 +3,13 @@ using EasyGram.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using EasyGram.Services;
+using Rotativa.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddSession();
 builder.Services.AddDbContext<AppDbContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
 
@@ -27,6 +28,9 @@ builder.Services.AddIdentity<Users, IdentityRole>(options =>
     .AddDefaultTokenProviders();                                        // добавляет стандартные провайдеры токенов
 
 builder.Services.AddScoped<IMarkdownService, MarkdownService>(); // добавляем markdown сервис
+builder.Services.AddScoped<IExamService, ExamService>(); // Exam сервис
+builder.Services.AddScoped<IEmailService, EmailService>();
+
 
 var app = builder.Build();
 
@@ -41,7 +45,10 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+
 app.UseRouting();
+app.UseRotativa();
+app.UseSession();
 
 app.UseAuthorization();
 
@@ -50,3 +57,5 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+

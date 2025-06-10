@@ -1,6 +1,7 @@
 ﻿using EasyGram.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace EasyGram.Data
 {
@@ -14,6 +15,7 @@ namespace EasyGram.Data
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<UserProgress> UserProgresses { get; set; }
+        public DbSet<ExamResult> ExamResults { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -42,6 +44,11 @@ namespace EasyGram.Data
                 .HasOne(up => up.Question)
                 .WithMany(q => q.UserProgresses)
                 .HasForeignKey(up => up.QuestionId);
+
+            builder.Entity<ExamResult>()
+                .HasOne(e => e.User)
+                .WithMany()
+                .HasForeignKey(e => e.UserId);
         }
     }
 }

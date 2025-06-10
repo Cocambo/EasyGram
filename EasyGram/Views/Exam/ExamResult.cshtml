@@ -1,0 +1,129 @@
+﻿@model EasyGram.ViewModels.Exam.ExamResultViewModel
+@{
+    ViewData["Title"] = "Результаты экзамена";
+}
+<div class="container mt-4">
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success">@TempData["Message"]</div>       @*  ИЗМЕНИТЬ МЕСТОПОЛОЖЕНИЕ  *@
+    }
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header @(Model.CanDownloadCertificate ? "bg-success" : "bg-warning") text-white">
+                    <h2 class="mb-0">Результаты экзамена</h2>
+                </div>
+                <div class="card-body text-center">
+                    <div class="result-stats mb-4">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="stat-card">
+                                    <h3 class="text-primary">@Model.TotalQuestions</h3>
+                                    <p>Всего вопросов</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-card">
+                                    <h3 class="text-success">@Model.CorrectAnswers</h3>
+                                    <p>Правильных ответов</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-card">
+                                    <h3 class="text-info">@Model.Percentage%</h3>
+                                    <p>Процент выполнения</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-card">
+                                    <h3 class="@(Model.CanDownloadCertificate ? "text-success" : "text-danger")">
+                                        @Model.Grade
+                                    </h3>
+                                    <p>Оценка</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (Model.CanDownloadCertificate)
+                    {
+                        <div class="alert alert-success" role="alert">
+                            <h4 class="alert-heading">Поздравляем!</h4>
+                            <p>Вы успешно прошли экзамен и можете получить сертификат.</p>
+                        </div>
+
+                        <div class="certificate-actions">
+                            <h5>Получить сертификат:</h5>
+                            <div class="btn-group-vertical" role="group">
+                                <form asp-action="DownloadCertificate" method="post" class="d-inline">
+                                    <input type="hidden" asp-for="TotalQuestions" />
+                                    <input type="hidden" asp-for="CorrectAnswers" />
+                                    <input type="hidden" asp-for="Percentage" />
+                                    <input type="hidden" asp-for="Grade" />
+                                    <input type="hidden" asp-for="CanDownloadCertificate" />
+                                    <input type="hidden" asp-for="CompletedDate" />
+                                    <button type="submit" class="btn btn-primary btn-lg mb-2">
+                                        <i class="fas fa-download"></i> Скачать PDF
+                                    </button>
+                                </form>
+
+                                <form asp-action="EmailCertificate" method="post" class="d-inline">
+                                    <input type="hidden" asp-for="TotalQuestions" />
+                                    <input type="hidden" asp-for="CorrectAnswers" />
+                                    <input type="hidden" asp-for="Percentage" />
+                                    <input type="hidden" asp-for="Grade" />
+                                    <input type="hidden" asp-for="CanDownloadCertificate" />
+                                    <input type="hidden" asp-for="CompletedDate" />
+                                    <button type="submit" class="btn btn-info btn-lg">
+                                        <i class="fas fa-envelope"></i> Отправить на email
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning" role="alert">
+                            <p>Для получения сертификата необходимо набрать минимум 70% правильных ответов.</p>
+                            <p class="mb-0">Рекомендуем повторно изучить теоретический материал и попробовать снова.</p>
+                        </div>
+
+                        <a asp-controller="Theory" asp-action="Index" class="btn btn-primary btn-lg">
+                            <i class="fas fa-book"></i> Изучить теорию
+                        </a>
+                    }
+                </div>
+                <div class="card-footer text-center">
+                    <small class="text-muted">Экзамен завершен: @Model.CompletedDate.ToString("dd.MM.yyyy HH:mm")</small>
+                    <br>
+                    <a asp-action="Index" class="btn btn-secondary mt-2">
+                        <i class="fas fa-redo"></i> Пройти экзамен заново
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* пусть пока тут будет блок style *@
+<style>
+    .stat-card {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #dee2e6;
+    }
+
+        .stat-card h3 {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+    .certificate-actions {
+        margin-top: 30px;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 10px;
+    }
+</style>

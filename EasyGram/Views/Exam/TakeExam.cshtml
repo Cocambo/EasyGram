@@ -1,0 +1,141 @@
+﻿@model EasyGram.ViewModels.Exam.ExamViewModel
+@{
+    ViewData["Title"] = "Экзамен";
+}
+<div class="container mt-4">
+    <form asp-action="SubmitExam" method="post" id="examForm">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h3 class="mb-0">Экзамен - @Model.Questions.Count вопросов</h3>
+                        <small>Время начала: @Model.ExamStartTime.ToString("dd.MM.yyyy HH:mm")</small>
+                    </div>
+                    <div class="card-body">
+                        @for (int i = 0; i < Model.Questions.Count; i++)
+                        {
+                            <div class="question-block mb-4 p-3 border rounded" id="question-@Model.Questions[i].QuestionId">
+                                <input type="hidden" asp-for="Questions[i].QuestionId" />
+                                <input type="hidden" asp-for="Questions[i].QuestionText" />
+                                <input type="hidden" asp-for="Questions[i].TopicTitle" />
+                                <p class="text-muted">Задание @(i + 1)</p>
+                                <p class="question-text">@Model.Questions[i].QuestionText</p>
+
+                                <div class="answers">
+                                    @for (int j = 0; j < Model.Questions[i].Answers.Count; j++)
+                                    {
+                                        <input type="hidden" asp-for="Questions[i].Answers[j].AnswerId" />
+                                        <input type="hidden" asp-for="Questions[i].Answers[j].Text" />
+
+                                        <div class="form-check">
+                                            <input class="form-check-input answer-radio"
+                                                   type="radio"
+                                                   name="UserAnswers[@Model.Questions[i].QuestionId]"
+                                                   value="@Model.Questions[i].Answers[j].AnswerId"
+                                                   id="answer_@Model.Questions[i].QuestionId@Model.Questions[i].Answers[j].AnswerId"
+                                                   onchange="markQuestionAnswered(@Model.Questions[i].QuestionId)" />
+                                            <label class="form-check-label"
+                                                   for="answer_@Model.Questions[i].QuestionId@Model.Questions[i].Answers[j].AnswerId">
+                                                @Model.Questions[i].Answers[j].Text
+                                            </label>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="text-muted text-center mb-2">
+                                <span id="answeredCount">0</span> из @Model.Questions.Count заданий выполнено
+                            </div>
+                            <div id="completeAllMessage" class="text-danger medium text-center mb-2">
+                                Для завершения экзамена необходимо выполнить все задания!
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary btn-lg" id="submitBtn" disabled>
+                                    <i class="fas fa-check"></i> Завершить экзамен
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    
+    function markQuestionAnswered(questionId) {
+        const questionBlock = document.getElementById('question-' + questionId); // после ответа присвоить вопросу класс answered, для учета вып заданий
+        questionBlock.classList.add('answered');
+        updateAnsweredCount();
+    }
+    
+    function updateAnsweredCount() {
+        const answeredQuestions = document.querySelectorAll('.question-block.answered').length;   // обновить счётчик отвеченных вопросов
+        document.getElementById('answeredCount').textContent = answeredQuestions;
+        const submitBtn = document.getElementById('submitBtn');
+        const completeAllMessage = document.getElementById('completeAllMessage');
+
+        if (answeredQuestions === @Model.Questions.Count) {
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('btn-primary');
+            submitBtn.classList.add('btn-success');
+            completeAllMessage.style.display = 'none';
+        } else {
+            submitBtn.disabled = true;
+            submitBtn.classList.remove('btn-success');
+            submitBtn.classList.add('btn-primary');
+            completeAllMessage.style.display = 'inline';
+        }
+    }
+
+    let isFormSubmitted = false;  // флаг для отслеживания отправки формы
+
+    
+    document.addEventListener('DOMContentLoaded', function () { // при загрузке страницы обновляем счётчик
+        
+        document.querySelectorAll('.answer-radio:checked').forEach(function (radio) { // проверяем какие вопросы уже отвечены
+            const questionId = radio.name.match(/UserAnswers\[(\d+)\]/)[1];
+            markQuestionAnswered(questionId);
+        });
+
+        document.getElementById('examForm').addEventListener('submit', function () { // при отправке формы сбрасываем флаг, чтобы не показывать предупреждение
+            isFormSubmitted = true;  // для проверки, отправлена ли форма
+        });
+    });
+
+    
+    window.addEventListener('beforeunload', function (e) { // предупреждение при попытке покинуть страницу, если экзамен не завершён
+        if (isFormSubmitted) return; // если форма отправлена
+
+        const answeredQuestions = document.querySelectorAll('.question-block.answered').length;
+        if (answeredQuestions > 0 && answeredQuestions < @Model.Questions.Count) { // если выполнено хотя бы одно
+            e.preventDefault();
+            e.returnValue = 'Вы не завершили экзамен. Ваши данные могут не сохраниться.';
+        }
+    });
+</script>
+
+
+@* пусть этот блок style пока будет здесь *@
+
+<style>
+    .question-block.answered {
+        border-left: 5px solid #28a745;
+        background-color: #f8fff8;
+    }
+
+    .question-title {
+        color: #495057;
+        border-bottom: 1px solid #dee2e6;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+    }
+
+    .answers {
+        margin-left: 20px;
+    }
+</style>
