@@ -1,5 +1,5 @@
 html {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 @media (min-width: 768px) {
@@ -8,9 +8,16 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+@media (min-width: 576px) {
+    .navbar-expand-sm .navbar-nav .nav-link {
+        padding-right: 1rem;
+        padding-left: 1rem;
+    }
 }
+
+/*.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}*/
 
 html {
   position: relative;
@@ -42,3 +49,39 @@ body {
 .bg-warning {
     background-color: #545be8 !important; /*Результаты экзамена шапка*/
 }
+
+body {
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+}
+
+.btn-reg_out {
+    background-color: #545be8;
+    color: #fff !important;
+    border-radius: 999px;
+    border: none;
+    transition: background 0.2s;
+    display: inline-block;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+    .btn-reg_out:hover, .btn-reg_out:focus {
+        background-color: #4c54ea;
+        color: #fff !important;
+        text-decoration: none;
+    }
+
+a {
+    color: #545be8;
+}
+
+.footer {
+    background-color: #393e46;
+    color: #6c757d !important;
+}
+    .footer a {
+        text-decoration: none;
+        color: #6c757d !important;
+        margin-left: 8px;
+    }
+

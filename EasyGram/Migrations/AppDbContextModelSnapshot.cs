@@ -142,7 +142,7 @@ namespace EasyGram.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Topics");
+                    b.ToTable("Topics", (string)null);
                 });
 
             modelBuilder.Entity("EasyGram.Models.UserProgress", b =>

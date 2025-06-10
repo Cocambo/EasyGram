@@ -34,11 +34,11 @@
 
     .topic-link:hover {
         background-color: #e9ecef;
-        color: #0d6efd;
+        color: #545be8;
     }
 
     .topic-link.active {
-        background-color: #0d6efd;
+        background-color: #545be8;
         color: white;
     }
 
@@ -67,7 +67,7 @@
     }
 
     .theory-text blockquote {
-        border-left: 4px solid #0d6efd;
+        border-left: 4px solid #545be8;
         padding-left: 1rem;
         margin: 1rem 0;
         font-style: italic;
@@ -87,3 +87,8 @@
         border-radius: 0.375rem;
         overflow-x: auto;
     }
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff !important;
+    background-color: #545be8;
+}
