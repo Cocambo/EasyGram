@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header bg-info text-white">
+                    <div class="card-header text-white">
                         <h3 class="mb-0">Экзамен - @Model.Questions.Count вопросов</h3>
                         <small>Время начала: @Model.ExamStartTime.ToString("dd.MM.yyyy HH:mm")</small>
                     </div>
@@ -53,7 +53,7 @@
                                 Для завершения экзамена необходимо выполнить все задания!
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary btn-lg" id="submitBtn" disabled>
+                                <button type="submit" class="btn btn-reg_out btn-lg" id="submitBtn" disabled>
                                     <i class="fas fa-check"></i> Завершить экзамен
                                 </button>
                             </div>
@@ -81,13 +81,13 @@
 
         if (answeredQuestions === @Model.Questions.Count) {
             submitBtn.disabled = false;
-            submitBtn.classList.remove('btn-primary');
+            submitBtn.classList.remove('btn-reg_out');
             submitBtn.classList.add('btn-success');
             completeAllMessage.style.display = 'none';
         } else {
             submitBtn.disabled = true;
             submitBtn.classList.remove('btn-success');
-            submitBtn.classList.add('btn-primary');
+            submitBtn.classList.add('btn-reg_out');
             completeAllMessage.style.display = 'inline';
         }
     }
@@ -124,7 +124,7 @@
 
 <style>
     .question-block.answered {
-        border-left: 5px solid #28a745;
+        border-left: 5px solid #989ce39;
         background-color: #f8fff8;
     }
 
@@ -137,5 +137,8 @@
 
     .answers {
         margin-left: 20px;
+    }
+    .btn-sucsess {
+        border-radius: 10px;
     }
 </style>

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="~/css/theory.css" />
     <link rel="stylesheet" href="~/css/test.css" />
     <link rel="stylesheet" href="~/css/home.css" />
+    <link rel="stylesheet" href="~/css/exam.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap&subset=cyrillic" rel="stylesheet">
 </head>
 <body>
@@ -30,7 +31,7 @@
                             <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Practice" ? "active" : "")" asp-area="" asp-controller="Practice" asp-action="Index">Практика</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Exam" asp-action="Index">Экзамен</a>
+                            <a class="nav-link text-dark @(ViewContext.RouteData.Values["controller"]?.ToString() == "Exam" ? "active" : "")" asp-area="" asp-controller="Exam" asp-action="Index">Экзамен</a>
                         </li>
                         <partial name ="_LoginPartial" />
                     </ul>

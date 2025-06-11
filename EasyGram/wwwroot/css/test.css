@@ -9,7 +9,7 @@
     font-weight: bold;
     color: white;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
-    background-image: linear-gradient(to right, #A9D9F5, #0D6EFD);
+    background-image: linear-gradient(to right, #989ce3fa, #545be8);
     border-radius: 0.375rem;
 }
 
@@ -28,3 +28,11 @@
 .title-h{
     margin-bottom:120px;
 }
+
+.card-header{
+    background-color: #545be8;
+    color: white;
+}
+    .card-header h5 {
+        margin-bottom: 0;
+    }
