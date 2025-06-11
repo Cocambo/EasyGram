@@ -143,7 +143,7 @@ namespace EasyGram.Controllers
 
             var certificateData = new CertificateViewModel
             {
-                UserName = user.Email,
+                UserName = user.FullName,
                 Grade = model.Grade,
                 Percentage = model.Percentage,
                 CompletedDate = model.CompletedDate,

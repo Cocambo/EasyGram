@@ -43,12 +43,26 @@
             @RenderBody()
         </main>
     </div>
+    <footer class="box-shadow border-top-footer">
+        <div class="blocks container ">
+            <div>
+                <span class="logo">EasyGram</span>
+                <p class="adress">Мы — ваша платформа для качественного обучения русскому языку. Присоединяйтесь и двигайтесь к высоким баллам ЕГЭ!</p>
+            </div>
+            <div>
+                <h4 id="aboutus">О нас</h4>
+                <ul class="block-li">
+                    <li><a asp-controller="Home" asp-action="Index">Главная</a></li>
+                    <li><a asp-controller="Theory" asp-action="Index">Теория</a></li>
+                    <li><a asp-controller="Practice" asp-action="Index">Практика</a></li>
+                    <li><a asp-controller="Exam" asp-action="Index">Экзамен</a></li>
+                </ul>
 
-    <footer class="footer text-muted">
-        <div class="container d-inline">
-            EasyGram
-            <a class="" asp-area="" asp-controller="Theory" asp-action="Index">Теория</a>
-            <a class="" asp-area="" asp-controller="Practice" asp-action="Index">Практика</a>
+            </div>
+            <div>
+                <h4>Связаться с нами</h4>
+                <p class="adress">easygram@support.ru</p>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
