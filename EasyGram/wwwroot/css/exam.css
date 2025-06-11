@@ -1,0 +1,28 @@
+﻿.col-md-8{
+    border-radius: 10px;
+}
+
+.card-header {
+    background-color: #545be8;
+}
+
+h2 {
+    text-align: center;
+}
+
+.alert{
+    border-radius: 0.5rem;
+}
+
+.alert-warning {
+    text-align: center;
+    border-color: #989ce396;
+}
+
+.exam-warning{
+    margin-top: 10px;
+}
+
+.card-footer {
+    background-color: #f8f9fa;
+}

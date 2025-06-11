@@ -7,7 +7,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header bg-primary text-white">
+                <div class="card-header text-white">
                     <h2 class="mb-0">Итоговый экзамен</h2>
                 </div>
                 <div class="card-body">
@@ -22,7 +22,7 @@
                         </ul>
                     </div>
 
-                    <div class="alert alert-warning" role="alert">
+                    <div class="alert alert-warning exam-warning" role="alert">
                         <p>Перед началом экзамена убедитесь, что вы хорошо изучили теоретический материал и прошли практические задания.</p>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                     @if (ViewBag.IsExamAvailable)
                     {
                         <form asp-action="StartExam" method="post">
-                            <button type="submit" class="btn btn-success btn-lg">
+                            <button type="submit" class="btn btn-reg_out btn-lg">
                                 <i class="fas fa-play"></i> Начать экзамен
                             </button>
                         </form>
@@ -44,7 +44,7 @@
                                 Для начала экзамена необходимо выполнить практические задания.
                             </p>
                             <hr>
-                            <a asp-controller="Practice" asp-action="Index" class="btn btn-primary">
+                            <a asp-controller="Practice" asp-action="Index" class="btn btn-reg_out">
                                 <i class="fas fa-tasks"></i> Перейти к практике
                             </a>
                         </div>

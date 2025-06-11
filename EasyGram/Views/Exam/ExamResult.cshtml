@@ -10,31 +10,31 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header @(Model.CanDownloadCertificate ? "bg-success" : "bg-warning") text-white">
+                <div class="card-header text-white">
                     <h2 class="mb-0">Результаты экзамена</h2>
                 </div>
                 <div class="card-body text-center">
                     <div class="result-stats mb-4">
                         <div class="row">
-                            <div class="col-md-3">
+                            @* <div class="col-md-3">
                                 <div class="stat-card">
                                     <h3 class="text-primary">@Model.TotalQuestions</h3>
                                     <p>Всего вопросов</p>
                                 </div>
-                            </div>
-                            <div class="col-md-3">
+                            </div> *@
+                            <div class="col-md-4">
                                 <div class="stat-card">
                                     <h3 class="text-success">@Model.CorrectAnswers</h3>
                                     <p>Правильных ответов</p>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="stat-card">
-                                    <h3 class="text-info">@Model.Percentage%</h3>
+                                    <h3 class="text-info8">@Model.Percentage%</h3>
                                     <p>Процент выполнения</p>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="stat-card">
                                     <h3 class="@(Model.CanDownloadCertificate ? "text-success" : "text-danger")">
                                         @Model.Grade
@@ -62,7 +62,7 @@
                                     <input type="hidden" asp-for="Grade" />
                                     <input type="hidden" asp-for="CanDownloadCertificate" />
                                     <input type="hidden" asp-for="CompletedDate" />
-                                    <button type="submit" class="btn btn-primary btn-lg mb-2">
+                                    <button type="submit" class="btn btn-reg_out btn-lg mb-2">
                                         <i class="fas fa-download"></i> Скачать PDF
                                     </button>
                                 </form>
@@ -74,7 +74,7 @@
                                     <input type="hidden" asp-for="Grade" />
                                     <input type="hidden" asp-for="CanDownloadCertificate" />
                                     <input type="hidden" asp-for="CompletedDate" />
-                                    <button type="submit" class="btn btn-info btn-lg">
+                                    <button type="submit" class="btn btn-reg_out btn-lg">
                                         <i class="fas fa-envelope"></i> Отправить на email
                                     </button>
                                 </form>
@@ -88,7 +88,7 @@
                             <p class="mb-0">Рекомендуем повторно изучить теоретический материал и попробовать снова.</p>
                         </div>
 
-                        <a asp-controller="Theory" asp-action="Index" class="btn btn-primary btn-lg">
+                        <a asp-controller="Theory" asp-action="Index" class="btn btn-reg_out btn-lg">
                             <i class="fas fa-book"></i> Изучить теорию
                         </a>
                     }
@@ -113,6 +113,7 @@
         border-radius: 10px;
         margin-bottom: 15px;
         border: 1px solid #dee2e6;
+        height: 207px;
     }
 
         .stat-card h3 {
@@ -126,4 +127,19 @@
         background: #f8f9fa;
         border-radius: 10px;
     }
+    
+    .text-info8{
+        color: #545be8;
+    }
+
+    .btn-group-vertical {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .certificate-actions h5 {
+        margin-bottom: 1rem;
+    }
+
 </style>

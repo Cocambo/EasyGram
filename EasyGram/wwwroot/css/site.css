@@ -31,7 +31,7 @@ body {
 /*здесь мен€ю кнопочки и вс€кие элементы с сайта, все в одной делаю*/
 /* пока пусть будет внизу, потом можно будет по отдельным css файлам раскидать*/
 
-.bg-info {
+/*.bg-info {
     background-color: #545be8 !important; 
 }
 
@@ -47,8 +47,8 @@ body {
 }
 
 .bg-warning {
-    background-color: #545be8 !important; /*–езультаты экзамена шапка*/
-}
+    background-color: #545be8 !important;*/ /*–езультаты экзамена шапка*/
+/*}*/
 
 body {
     font-family: 'Inter', Arial, Helvetica, sans-serif;
@@ -73,6 +73,7 @@ body {
 
 a {
     color: #545be8;
+    text-decoration: none;
 }
 
 .footer {
@@ -84,4 +85,18 @@ a {
         color: #6c757d !important;
         margin-left: 8px;
     }
+
+.alert-warning {
+    background: #989ce396;
+    color: #0c117e;
+}
+
+.alert-info {
+    border-color: #0c117e;
+    background: #989ce396;
+    color: #0c117e;
+}
+
+
+
 

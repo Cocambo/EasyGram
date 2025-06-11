@@ -40,6 +40,7 @@
                         <div class="card h-100">
                             <div class="card-body">
                                 <h5 class="card-title">@topic.Title</h5>
+                                <hr style="border: none; height: 4px; background-color: rgb(240, 201, 50);">
                                 <p class="card-text">
                                     @{
                                         var endChars = new[] { '.', '!', '?' };
@@ -63,7 +64,7 @@
                             </div>
                             <div class="card-footer">
                                 <a href="@Url.Action("StartTest", new { topicId = topic.Id })"
-                                   class="btn btn-primary btn-block">
+                                   class="btn-reg_out btn btn-block">
                                     <i class="fas fa-play"></i> Начать тест
                                 </a>
                             </div>
